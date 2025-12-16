@@ -8,8 +8,14 @@ const projects = [
     color: 'cyan' as const,
   },
   {
-    title: 'Spell',
-    url: 'spell.velarixsolutions.nl',
+    title: 'Escos Entries',
+    url: 'https://pastebin.com/u/EscoBreakTings',
+    description: 'Where I dump out my daily thoughts or random interests',
+    color: 'cyan' as const,
+  },
+  {
+    title: 'My Archive / Discord Games / Direct DM Tool',
+    url: 'https://takeabreak.velarixsolutions.nl',
     description: 'Magical digital experiences and interactive web applications.',
     color: 'magenta' as const,
   },
@@ -36,12 +42,6 @@ const projects = [
     url: 'find.velarixsolutions.nl',
     description: 'Search and discovery platform for digital content.',
     color: 'purple' as const,
-  },
-  {
-    title: 'Lazy',
-    url: 'lazy.velarixsolutions.nl',
-    description: 'Simplified tools for efficient workflow optimization.',
-    color: 'cyan' as const,
   },
   {
     title: 'Store',
