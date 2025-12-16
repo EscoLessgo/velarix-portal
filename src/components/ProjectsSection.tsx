@@ -8,6 +8,12 @@ const projects = [
     color: 'cyan' as const,
   },
   {
+    title: 'EscosArchive',
+    url: 'takeabreak.velarixsolutions.nl',
+    description: 'My Games / Projects',
+    color: 'cyan' as const,
+  },
+  {
     title: 'Escos Entries',
     url: 'pastebin.com/u/EscoBreakTings',
     description: 'Where I dump out my daily thoughts or random interests',
