@@ -9,7 +9,7 @@ const projects = [
   },
   {
     title: 'EscosArchive',
-    url: 'takeabreak.velarixsolutions.nl',
+    url: 'takebreak.velarixsolutions.nl',
     description: 'My Games / Projects',
     color: 'cyan' as const,
   },
