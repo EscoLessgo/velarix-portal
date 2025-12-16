@@ -8,6 +8,12 @@ const projects = [
     color: 'cyan' as const,
   },
   {
+    title: 'What Im Listening To',
+    url: 'spoti.velarixsolutions.nl',
+    description: 'Escos Live Audio Visualizer',
+    color: 'cyan' as const,
+  },
+  {
     title: 'EscosArchive',
     url: 'takebreak.velarixsolutions.nl',
     description: 'My Games / Projects',
