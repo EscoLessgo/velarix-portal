@@ -9,7 +9,7 @@ const projects = [
   },
   {
     title: 'Escos Entries',
-    url: 'https://pastebin.com/u/EscoBreakTings',
+    url: 'https://takebreak.velarixsolutions.nl/',
     description: 'Where I dump out my daily thoughts or random interests',
     color: 'cyan' as const,
   },
