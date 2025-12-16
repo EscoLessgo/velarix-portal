@@ -14,12 +14,6 @@ const projects = [
     color: 'cyan' as const,
   },
   {
-    title: 'My Archive / Discord Games / Direct DM Tool',
-    url: 'https://takeabreak.velarixsolutions.nl',
-    description: 'Magical digital experiences and interactive web applications.',
-    color: 'magenta' as const,
-  },
-  {
     title: 'Esco Signs',
     url: 'escosigns.velarixsolutions.nl',
     description: 'Professional signage and branding solutions platform.',
