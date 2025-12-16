@@ -9,7 +9,7 @@ const projects = [
   },
   {
     title: 'Escos Entries',
-    url: 'https://pastebin.com/u/EscoBreakTings',
+    url: 'pastebin.com/u/EscoBreakTings',
     description: 'Where I dump out my daily thoughts or random interests',
     color: 'cyan' as const,
   },
@@ -36,12 +36,6 @@ const projects = [
     url: 'find.velarixsolutions.nl',
     description: 'Search and discovery platform for digital content.',
     color: 'purple' as const,
-  },
-  {
-    title: 'Store',
-    url: 'store.velarixsolutions.nl',
-    description: 'E-commerce platform and digital marketplace.',
-    color: 'magenta' as const,
   },
   {
     title: 'Inlet',
