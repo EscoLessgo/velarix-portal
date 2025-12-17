@@ -8,6 +8,12 @@ const projects = [
     color: 'cyan' as const,
   },
   {
+    title: 'Escos Entries',
+    url: 'pastebin.com/u/EscoBreakTings',
+    description: 'Where I dump out my daily thoughts or random interests',
+    color: 'cyan' as const,
+  },
+  {
     title: 'What Im Listening To',
     url: 'spoti.velarixsolutions.nl',
     description: 'Escos Live Audio Visualizer',
@@ -17,12 +23,6 @@ const projects = [
     title: 'EscosArchive',
     url: 'takebreak.velarixsolutions.nl',
     description: 'My Games / Projects',
-    color: 'cyan' as const,
-  },
-  {
-    title: 'Escos Entries',
-    url: 'pastebin.com/u/EscoBreakTings',
-    description: 'Where I dump out my daily thoughts or random interests',
     color: 'cyan' as const,
   },
   {
