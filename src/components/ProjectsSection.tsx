@@ -8,6 +8,12 @@ const projects = [
     color: 'cyan' as const,
   },
   {
+    title: 'Spelling Bee Rip',
+    url: 'spell.velarixsolutions.nl',
+    description: 'Better NYT Shitstain daily challenge',
+    color: 'cyan' as const,
+  },
+  {
     title: 'Escos Entries',
     url: 'pastebin.com/u/EscoBreakTings',
     description: 'Where I dump out my daily thoughts or random interests',
