@@ -8,6 +8,24 @@ const projects = [
     color: 'cyan' as const,
   },
   {
+    title: 'Farkle Discord Game Install Link:
+    url: 'https://discord.com/oauth2/authorize?client_id=1448243957715959898',
+    description: 'Farkle :)',
+    color: 'cyan' as const,
+  },
+  {
+    title: 'AlphaBee Discord Game Install Link:
+    url: 'https://discord.com/oauth2/authorize?client_id=1451743881854062685',
+    description: 'AlphaBee',
+    color: 'cyan' as const,
+  },
+  {
+    title: 'SquareRoots Discord Game Install Link:
+    url: 'https://discord.com/oauth2/authorize?client_id=1449456536710811770',
+    description: 'DotsNBoxes',
+    color: 'cyan' as const,
+  },
+  {
     title: 'Spelling Bee Rip',
     url: 'spell.velarixsolutions.nl',
     description: 'Better NYT Shitstain daily challenge',
