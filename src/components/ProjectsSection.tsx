@@ -45,7 +45,7 @@ const projects = [
   },
   {
     title: 'EscosArchive',
-    url: 'takebreak.velarixsolutions.nl',
+    url: 'more.velarixsolutions.nl',
     description: 'My Games / Projects',
     color: 'cyan' as const,
   },
