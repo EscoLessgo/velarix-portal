@@ -186,75 +186,71 @@ export default function VideoHero() {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
-      {/* Video Container */}
-      <div
-        className={`relative w-full max-w-md aspect-[9/16] rounded-2xl overflow-hidden border-2 border-primary/30 box-glow-cyan transition-all duration-1000 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-          }`}
-      >
-        {/* Vanta.js Background */}
-        <div ref={vantaRef} className="absolute inset-0 w-full h-full" />
+      {/* Vanta.js Background - Full Screen */}
+      <div ref={vantaRef} className="absolute inset-0 w-full h-full -z-20" />
 
+      {/* Overlay gradient - Full Screen */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background via-transparent to-transparent opacity-60 -z-10" />
 
-        {/* Background Audio */}
-        <audio
-          ref={audioRef}
-          src="/new-track.flac"
-          loop
-          crossOrigin="anonymous"
-          onError={(e) => console.error("[VideoHero] Audio failed to load", e)}
+      {/* Scanline effect - Full Screen */}
+      <div className="absolute inset-0 pointer-events-none scanline opacity-30 -z-10" />
+
+      {/* visualizer - Bottom of screen */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 z-0 pointer-events-none flex items-end justify-center opacity-40 pb-8">
+        <canvas
+          ref={canvasRef}
+          width="300"
+          height="100"
+          className="w-full max-w-md h-full"
         />
+      </div>
 
-        {/* Visualizer Overlay */}
-        <div className="absolute bottom-16 left-0 right-0 h-24 z-10 pointer-events-none flex items-end justify-center opacity-80">
-          <canvas
-            ref={canvasRef}
-            width="300"
-            height="100"
-            className="w-full h-full"
-          />
+      {/* Background Audio (Hidden) */}
+      <audio
+        ref={audioRef}
+        src="/new-track.flac"
+        loop
+        crossOrigin="anonymous"
+        onError={(e) => console.error("[VideoHero] Audio failed to load", e)}
+      />
+
+      {/* Audio Toggle Button - Floating Bottom Right */}
+      <button
+        onClick={toggleMute}
+        className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-background/20 backdrop-blur-md border border-primary/30 text-primary hover:bg-primary/20 hover:text-primary-foreground transition-all duration-300 hover:scale-110"
+        aria-label={isMuted ? 'Unmute' : 'Mute'}
+      >
+        {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+      </button>
+
+      {/* Content wrapper to ensure it sits above background */}
+      <div className="relative z-10 flex flex-col items-center">
+        {/* Title */}
+        <div
+          className={`text-center transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+        >
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-display font-bold gradient-text drop-shadow-2xl">
+            VELARIX
+          </h1>
+          <p className="mt-6 text-lg md:text-2xl text-white/90 font-body tracking-widest uppercase">
+            Digital Solutions & Creative Development
+          </p>
         </div>
 
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
-
-        {/* Scanline effect */}
-        <div className="absolute inset-0 pointer-events-none scanline opacity-30" />
-
-        {/* Audio Toggle Button */}
+        {/* Scroll indicator */}
         <button
-          onClick={toggleMute}
-          className="absolute bottom-4 right-4 z-20 p-3 rounded-full bg-background/80 backdrop-blur-sm border border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110"
-          aria-label={isMuted ? 'Unmute' : 'Mute'}
+          onClick={scrollToProjects}
+          className={`mt-24 flex flex-col items-center gap-2 text-white/80 hover:text-primary transition-all duration-500 group ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          style={{ transitionDelay: '600ms' }}
         >
-          {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+          <span className="text-sm font-body uppercase tracking-[0.2em] group-hover:tracking-[0.3em] transition-all">
+            Explore Projects
+          </span>
+          <ChevronDown className="w-8 h-8 animate-bounce mt-2" />
         </button>
       </div>
-
-      {/* Title */}
-      <div
-        className={`mt-12 text-center transition-all duration-1000 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
-      >
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold gradient-text">
-          VELARIX
-        </h1>
-        <p className="mt-4 text-lg md:text-xl text-muted-foreground font-body tracking-wide">
-          Digital Solutions & Creative Development
-        </p>
-      </div>
-
-      {/* Scroll indicator */}
-      <button
-        onClick={scrollToProjects}
-        className={`mt-16 flex flex-col items-center gap-2 text-primary hover:text-secondary transition-all duration-500 group ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
-        style={{ transitionDelay: '600ms' }}
-      >
-        <span className="text-sm font-body uppercase tracking-widest text-muted-foreground group-hover:text-primary transition-colors">
-          Explore Projects
-        </span>
-        <ChevronDown className="w-6 h-6 animate-bounce" />
-      </button>
     </section>
   );
 }
