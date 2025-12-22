@@ -21,7 +21,9 @@ export default function VideoHero() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    audio.volume = 0.1; // 10% volume
+    // Force volume to 0.1 (10%) and log
+    audio.volume = 0.1;
+    console.log("[VideoHero] Audio initialized. Volume set to:", audio.volume);
 
     const initAudioContext = () => {
       if (!audioContextRef.current) {
@@ -45,16 +47,16 @@ export default function VideoHero() {
     };
 
     if (!isMuted) {
-      // User wants audio
+      console.log("[VideoHero] User requested audio... attempting play.");
       const playPromise = audio.play();
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
+            console.log("[VideoHero] Play success.");
             initAudioContext();
           })
           .catch((error) => {
-            console.log("Autoplay prevented:", error);
-            // If autoplay fails, we might want to revert isMuted to true or show UI
+            console.error("[VideoHero] Autoplay prevented:", error);
           });
       }
     } else {
@@ -154,7 +156,7 @@ export default function VideoHero() {
         {/* Background Audio */}
         <audio
           ref={audioRef}
-          src="/assets/music/new-track.mp3"
+          src="/assets/music/new-track.flac"
           loop
           crossOrigin="anonymous"
           onError={(e) => console.error("Audio failed to load", e)}
