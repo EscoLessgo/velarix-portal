@@ -22,31 +22,45 @@ export default function VideoHero() {
   useEffect(() => {
     setIsLoaded(true);
 
-    // Initialize Vanta.js Birds effect
-    if (!vantaEffect.current && vantaRef.current) {
-      vantaEffect.current = BIRDS({
-        el: vantaRef.current,
-        THREE: THREE, // Pass THREE to Vanta
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200.00,
-        minWidth: 200.00,
-        scale: 1.00,
-        scaleMobile: 1.00,
-        backgroundColor: 0x000000,
-        color1: 0x000000,
-        color2: 0x00d1ff, // 53759
-        birdSize: 1.10,
-        wingSpan: 30.00,
-        speedLimit: 4.00,
-        separation: 20.00,
-        alignment: 20.00,
-        cohesion: 51.00,
-        backgroundAlpha: 1.00,
-        quantity: 5 // As requested
-      });
-    }
+    const initVanta = async () => {
+      try {
+        // Ensure THREE is available globally for Vanta
+        if (!(window as any).THREE) {
+          (window as any).THREE = THREE;
+        }
+
+        // Initialize Vanta.js Birds effect
+        if (!vantaEffect.current && vantaRef.current) {
+          vantaEffect.current = BIRDS({
+            el: vantaRef.current,
+            THREE: THREE, // Pass THREE explicitly as well
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            backgroundColor: 0x000000,
+            color1: 0x000000,
+            color2: 0x00d1ff, // Cyan
+            birdSize: 1.10,
+            wingSpan: 30.00,
+            speedLimit: 4.00,
+            separation: 20.00,
+            alignment: 20.00,
+            cohesion: 51.00,
+            backgroundAlpha: 1.00,
+            quantity: 5
+          });
+          console.log("[VideoHero] Vanta effect initialized");
+        }
+      } catch (error) {
+        console.error("[VideoHero] Failed to initialize Vanta effect:", error);
+      }
+    };
+
+    initVanta();
 
     return () => {
       if (vantaEffect.current) vantaEffect.current.destroy();
