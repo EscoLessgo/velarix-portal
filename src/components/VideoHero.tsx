@@ -1,10 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChevronDown, Volume2, VolumeX } from 'lucide-react';
+// @ts-ignore
+import BIRDS from 'vanta/dist/vanta.birds.min';
+import * as THREE from 'three';
 
 export default function VideoHero() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [videoError, setVideoError] = useState(false);
+  // Video error state removed as we are using Vanta now
+
+  const vantaRef = useRef<HTMLDivElement>(null);
+  const vantaEffect = useRef<any>(null);
+
   const audioRef = useRef<HTMLAudioElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -14,7 +21,39 @@ export default function VideoHero() {
 
   useEffect(() => {
     setIsLoaded(true);
+
+    // Initialize Vanta.js Birds effect
+    if (!vantaEffect.current && vantaRef.current) {
+      vantaEffect.current = BIRDS({
+        el: vantaRef.current,
+        THREE: THREE, // Pass THREE to Vanta
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        backgroundColor: 0x000000,
+        color1: 0x000000,
+        color2: 0x00d1ff, // 53759
+        birdSize: 1.10,
+        wingSpan: 30.00,
+        speedLimit: 4.00,
+        separation: 20.00,
+        alignment: 20.00,
+        cohesion: 51.00,
+        backgroundAlpha: 1.00,
+        quantity: 5 // As requested
+      });
+    }
+
+    return () => {
+      if (vantaEffect.current) vantaEffect.current.destroy();
+    };
   }, []);
+
+  // ... (rest of audio logic remains effectively the same)
 
   // Handle audio playback and Context initialization
   useEffect(() => {
@@ -138,11 +177,9 @@ export default function VideoHero() {
         className={`relative w-full max-w-md aspect-[9/16] rounded-2xl overflow-hidden border-2 border-primary/30 box-glow-cyan transition-all duration-1000 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
           }`}
       >
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-900 via-[#0a0a1a] to-black">
-          {/* Abstract geometric patterns or subtle pulse */}
-          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,255,0.1),transparent_50%)] animate-pulse-glow" />
-          <div className="absolute inset-0 opacity-10 bg-[linear-gradient(45deg,transparent_45%,rgba(255,255,255,0.05)_50%,transparent_55%)] bg-[length:10px_10px]" />
-        </div>
+        {/* Vanta.js Background */}
+        <div ref={vantaRef} className="absolute inset-0 w-full h-full" />
+
 
         {/* Background Audio */}
         <audio
