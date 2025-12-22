@@ -147,7 +147,7 @@ export default function VideoHero() {
         {/* Background Audio */}
         <audio
           ref={audioRef}
-          src="/assets/music/new-track.mp3"
+          src="/new-track.flac"
           loop
           crossOrigin="anonymous"
           onError={(e) => console.error("[VideoHero] Audio failed to load", e)}
