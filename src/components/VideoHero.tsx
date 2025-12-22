@@ -138,28 +138,19 @@ export default function VideoHero() {
         className={`relative w-full max-w-md aspect-[9/16] rounded-2xl overflow-hidden border-2 border-primary/30 box-glow-cyan transition-all duration-1000 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
           }`}
       >
-        {!videoError ? (
-          <video
-            key={isMuted ? 'muted' : 'unmuted'}
-            src="/assets/video/hero.mp4"
-            autoPlay
-            muted={true}
-            loop
-            className="absolute inset-0 w-full h-full"
-            style={{ objectFit: 'cover' }}
-            onError={() => setVideoError(true)}
-          />
-        ) : (
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-900 to-black animate-pulse" />
-        )}
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-900 via-[#0a0a1a] to-black">
+          {/* Abstract geometric patterns or subtle pulse */}
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,255,0.1),transparent_50%)] animate-pulse-glow" />
+          <div className="absolute inset-0 opacity-10 bg-[linear-gradient(45deg,transparent_45%,rgba(255,255,255,0.05)_50%,transparent_55%)] bg-[length:10px_10px]" />
+        </div>
 
         {/* Background Audio */}
         <audio
           ref={audioRef}
-          src="/assets/music/new-track.flac"
+          src="/assets/music/new-track.mp3"
           loop
           crossOrigin="anonymous"
-          onError={(e) => console.error("Audio failed to load", e)}
+          onError={(e) => console.error("[VideoHero] Audio failed to load", e)}
         />
 
         {/* Visualizer Overlay */}
