@@ -1,0 +1,125 @@
+/* Audio Player Styles */
+
+/* Visualizer container - fixed at bottom */
+.audio-visualizer-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    z-index: 40;
+    pointer-events: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0.5;
+    padding-bottom: 1rem;
+}
+
+.audio-visualizer-canvas {
+    width: 100%;
+    max-width: 600px;
+    height: 100%;
+}
+
+/* Audio controls - fixed bottom right */
+.audio-controls {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 9999px;
+    background: color-mix(in srgb, hsl(240 20% 4%), transparent 20%);
+    backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in srgb, hsl(180 100% 50%), transparent 70%);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.audio-controls:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px color-mix(in srgb, hsl(180 100% 50%), transparent 70%);
+}
+
+/* Volume slider container */
+.audio-slider-container {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.3s ease-in-out;
+}
+
+.audio-controls:hover .audio-slider-container {
+    width: 100px;
+}
+
+.audio-slider {
+    width: 80px;
+    margin: 0 0.5rem;
+    height: 6px;
+    background: color-mix(in srgb, hsl(180 100% 50%), transparent 70%);
+    border-radius: 4px;
+    appearance: none;
+    cursor: pointer;
+}
+
+.audio-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: hsl(180 100% 50%);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.audio-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 8px hsl(180 100% 50%);
+}
+
+.audio-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: hsl(180 100% 50%);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Toggle button */
+.audio-toggle-btn {
+    padding: 0.5rem;
+    border-radius: 9999px;
+    background: transparent;
+    border: none;
+    color: hsl(180 100% 70%);
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.audio-toggle-btn:hover {
+    color: hsl(180 100% 90%);
+    background-color: color-mix(in srgb, hsl(180 100% 50%), transparent 80%);
+}
+
+.audio-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Light theme overrides */
+[data-theme='light'] .audio-controls {
+    background: color-mix(in srgb, hsl(0 0% 100%), transparent 20%);
+    border-color: color-mix(in srgb, hsl(180 100% 40%), transparent 50%);
+}
+
+[data-theme='light'] .audio-toggle-btn {
+    color: hsl(180 100% 35%);
+}
+
+[data-theme='light'] .audio-toggle-btn:hover {
+    color: hsl(180 100% 25%);
+}

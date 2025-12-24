@@ -1,0 +1,342 @@
+/* SidebarTree Component Styles */
+
+.sidebar-tree-container {
+    --border-color: color-mix(in srgb, currentColor, transparent 80%);
+    --tree-focus-color: hsl(180 100% 50%);
+    --duration: 0.26;
+    --opacity: 0.4;
+    --blur: 10;
+    --translate: 12;
+
+    height: 100%;
+    font-family: 'Noto Sans Mono', 'Space Grotesk', monospace;
+    font-size: 0.875rem;
+}
+
+.sidebar-aside {
+    background: color-mix(in srgb, hsl(240 20% 4%), transparent 20%);
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    min-width: 280px;
+    max-width: 350px;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    color: hsl(0 0% 44%);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.sidebar-aside nav {
+    overflow: hidden;
+}
+
+.sidebar-tree-content {
+    display: block;
+    height: 100%;
+}
+
+/* Header Styles */
+.sidebar-header {
+    padding: 0.5rem;
+    display: grid;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.sidebar-header h1 {
+    font-size: 0.875rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.sidebar-header h1 a {
+    padding-block: 0.5rem;
+    padding-left: 2px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: hsl(0 0% 60%);
+    text-decoration: none;
+    outline-color: var(--tree-focus-color);
+    transition: color 0.2s ease;
+}
+
+.sidebar-header h1 a:hover {
+    color: hsl(180 100% 70%);
+}
+
+.sidebar-header h1 svg {
+    width: 20px;
+    height: 20px;
+    color: hsl(180 100% 50%);
+}
+
+/* Search Input Styles */
+.tree-search-input-container {
+    position: relative;
+}
+
+.tree-search-input-container .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    translate: 0 -50%;
+    width: 16px;
+    height: 16px;
+    opacity: 0.85;
+}
+
+.tree-search-input-container kbd {
+    border: 1px solid var(--border-color);
+    position: absolute;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 0.625rem;
+    border-radius: 3px;
+    color: hsl(180 100% 95%);
+    background: color-mix(in srgb, var(--tree-focus-color), transparent 80%);
+    display: grid;
+    place-items: center;
+    right: 8px;
+    translate: 0 -50%;
+    font-family: inherit;
+}
+
+.tree-search-input {
+    width: 100%;
+    max-width: 100%;
+    line-height: 2;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    font-size: inherit;
+    background: color-mix(in srgb, hsl(240 20% 4%), hsl(180 100% 95%) 5%);
+    color: hsl(180 100% 95%);
+    padding-left: 28px;
+    padding-right: 32px;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tree-search-input::selection {
+    background: var(--tree-focus-color);
+    color: hsl(240 20% 4%);
+}
+
+.tree-search-input:focus {
+    outline: none;
+    border-color: var(--tree-focus-color);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--tree-focus-color), transparent 80%);
+}
+
+.tree-search-input::placeholder {
+    color: color-mix(in srgb, hsl(180 100% 95%), transparent 50%);
+}
+
+/* Tree Styles */
+.sidebar-tree-content .tree-group-container,
+.sidebar-tree-content ul[role="tree"],
+.sidebar-tree-content ul[role="group"] {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+    position: relative;
+}
+
+.sidebar-tree-content ul[role="tree"] {
+    display: grid;
+    height: 100%;
+    grid-template-rows: auto 1fr;
+}
+
+.sidebar-tree-content .tree-group-container:first-of-type {
+    border-bottom: 2px solid var(--border-color);
+}
+
+.sidebar-tree-content .tree-group-container+.tree-group-container {
+    height: 100%;
+    overflow: auto;
+    scrollbar-color: color-mix(in srgb, var(--tree-focus-color), transparent 50%) transparent;
+    scrollbar-width: thin;
+}
+
+.sidebar-tree-content .tree-group-container {
+    padding-block: 0.5rem;
+}
+
+/* Nested groups indentation */
+.sidebar-tree-content li>div ul[role="group"] {
+    margin-left: 1rem;
+}
+
+.sidebar-tree-content li>div ul[role="group"]>li:first-of-type {
+    margin-top: 0.5rem;
+}
+
+.sidebar-tree-content li>div ul[role="group"]>li:last-of-type {
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-tree-content li>div ul[role="group"]::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: color-mix(in srgb, var(--tree-focus-color), transparent 65%);
+}
+
+/* Grid wrapper for smooth expand/collapse transitions */
+.sidebar-tree-content li>div {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows calc(var(--duration) * 1s) ease-out;
+    overflow: hidden;
+}
+
+.sidebar-tree-content li>div[inert] {
+    grid-template-rows: 0fr;
+}
+
+.sidebar-tree-content [inert]>[role="group"] {
+    opacity: var(--opacity);
+    translate: 0 calc(var(--translate) * 1px);
+    filter: blur(calc(var(--blur) * 1px));
+}
+
+.sidebar-tree-content [role="group"] {
+    transition-property: translate, opacity, filter;
+    transition-duration: calc(var(--duration) * 1s);
+    transition-timing-function: ease-in-out;
+    translate: 0 0;
+    filter: blur(0px);
+    opacity: 1;
+}
+
+.sidebar-tree-content li>div>ul {
+    min-height: 0;
+}
+
+/* Tree item styles */
+.sidebar-tree-content [role="treeitem"] {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.25rem 0.75rem;
+    line-height: 1.6;
+    width: 100%;
+    gap: 0.5rem;
+    position: relative;
+    cursor: pointer;
+    transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.sidebar-tree-content [role="treeitem"] span:first-of-type {
+    flex: 1;
+}
+
+.sidebar-tree-content [role="treeitem"]:hover {
+    color: hsl(0 0% 90%);
+    background-color: color-mix(in srgb, var(--tree-focus-color), transparent 90%);
+}
+
+.sidebar-tree-content [role="treeitem"]:focus {
+    outline: none;
+    color: hsl(0 0% 90%);
+    background-color: color-mix(in srgb, var(--tree-focus-color), transparent 80%);
+}
+
+.sidebar-tree-content [role="treeitem"][aria-current="page"] {
+    color: hsl(180 100% 90%);
+    background-color: color-mix(in srgb, var(--tree-focus-color), transparent 85%);
+}
+
+.sidebar-tree-content [role="treeitem"][aria-current="page"]::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--tree-focus-color);
+    box-shadow: 0 0 8px var(--tree-focus-color);
+}
+
+.sidebar-tree-content [role="treeitem"][aria-current="page"][aria-level="1"]::before {
+    left: 2px;
+}
+
+/* Tree icon (expand/collapse) */
+.sidebar-tree-content [role="treeitem"][aria-expanded="true"] .tree-icon svg {
+    rotate: 135deg;
+}
+
+.sidebar-tree-content .tree-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.15s ease;
+}
+
+.sidebar-tree-content .tree-icon:hover {
+    background-color: color-mix(in srgb, var(--tree-focus-color), transparent 70%);
+}
+
+.sidebar-tree-content .tree-icon svg {
+    width: 14px;
+    height: 14px;
+    transition: rotate 0.26s ease-out;
+}
+
+/* Filtering styles */
+.sidebar-tree-content ul[role="tree"][data-filtering="true"] [role="treeitem"] {
+    opacity: 0.4;
+}
+
+.sidebar-tree-content ul[role="tree"][data-filtering="true"] [role="treeitem"][data-search-match="true"] {
+    opacity: 1;
+    color: hsl(180 100% 95%);
+    background-color: color-mix(in srgb, var(--tree-focus-color), transparent 60%);
+}
+
+.sidebar-tree-content ul[role="tree"][data-filtering="true"] [role="treeitem"][data-search-related="true"] {
+    color: hsl(0 0% 100%);
+    background-color: color-mix(in srgb, var(--tree-focus-color), transparent 80%);
+}
+
+.sidebar-tree-content ul[role="tree"][data-filtering="true"] [role="treeitem"]:focus {
+    opacity: 1;
+}
+
+/* External link icon */
+.sidebar-tree-content .external-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    opacity: 0.5;
+    transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-tree-content .external-icon svg {
+    width: 12px;
+    height: 12px;
+}
+
+.sidebar-tree-content [role="treeitem"]:hover .external-icon {
+    opacity: 1;
+    color: var(--tree-focus-color);
+}
+
+.sidebar-tree-content [role="treeitem"][data-external="true"]:hover {
+    color: hsl(180 100% 80%);
+}

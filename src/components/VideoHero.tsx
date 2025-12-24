@@ -1,16 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChevronDown, Volume2, VolumeX } from 'lucide-react';
-// @ts-ignore
-import BIRDS from 'vanta/dist/vanta.birds.min';
-import * as THREE from 'three';
 
 export default function VideoHero() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  // Video error state removed as we are using Vanta now
-
-  const vantaRef = useRef<HTMLDivElement>(null);
-  const vantaEffect = useRef<any>(null);
+  const [volume, setVolume] = useState(0.05);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -21,61 +15,15 @@ export default function VideoHero() {
 
   useEffect(() => {
     setIsLoaded(true);
-
-    const initVanta = async () => {
-      try {
-        // Ensure THREE is available globally for Vanta
-        if (!(window as any).THREE) {
-          (window as any).THREE = THREE;
-        }
-
-        // Initialize Vanta.js Birds effect
-        if (!vantaEffect.current && vantaRef.current) {
-          vantaEffect.current = BIRDS({
-            el: vantaRef.current,
-            THREE: THREE, // Pass THREE explicitly as well
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            backgroundColor: 0x000000,
-            color1: 0x000000,
-            color2: 0x00d1ff, // Cyan
-            birdSize: 1.10,
-            wingSpan: 30.00,
-            speedLimit: 4.00,
-            separation: 20.00,
-            alignment: 20.00,
-            cohesion: 51.00,
-            backgroundAlpha: 1.00,
-            quantity: 5
-          });
-          console.log("[VideoHero] Vanta effect initialized");
-        }
-      } catch (error) {
-        console.error("[VideoHero] Failed to initialize Vanta effect:", error);
-      }
-    };
-
-    initVanta();
-
-    return () => {
-      if (vantaEffect.current) vantaEffect.current.destroy();
-    };
   }, []);
-
-  // ... (rest of audio logic remains effectively the same)
 
   // Handle audio playback and Context initialization
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    // Force volume to 0.1 (10%) and log
-    audio.volume = 0.1;
+    // Set volume
+    audio.volume = volume;
     console.log("[VideoHero] Audio initialized. Volume set to:", audio.volume);
 
     const initAudioContext = () => {
@@ -121,7 +69,14 @@ export default function VideoHero() {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isMuted]);
+  }, [isMuted]); // Note: Volume changes are handled directly via Ref or separate Effect if needed, but simple assignment works better via handler or separate effect.
+
+  // Effect to update volume when state changes
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
 
   const drawVisualizer = () => {
     const canvas = canvasRef.current;
@@ -162,6 +117,14 @@ export default function VideoHero() {
     setIsMuted(!isMuted);
   };
 
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (newVolume > 0 && isMuted) {
+      setIsMuted(false);
+    }
+  };
+
   const scrollToProjects = () => {
     const projectsSection = document.getElementById('projects');
     if (projectsSection) {
@@ -186,11 +149,19 @@ export default function VideoHero() {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
-      {/* Vanta.js Background - Full Screen */}
-      <div ref={vantaRef} className="absolute inset-0 w-full h-full -z-20" />
+      {/* Background Video - Full Screen */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover -z-20"
+      >
+        <source src="/background.mp4" type="video/mp4" />
+      </video>
 
       {/* Overlay gradient - Full Screen */}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background via-transparent to-transparent opacity-60 -z-10" />
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background via-background/40 to-transparent opacity-80 -z-10" />
 
       {/* Scanline effect - Full Screen */}
       <div className="absolute inset-0 pointer-events-none scanline opacity-30 -z-10" />
@@ -214,14 +185,31 @@ export default function VideoHero() {
         onError={(e) => console.error("[VideoHero] Audio failed to load", e)}
       />
 
-      {/* Audio Toggle Button - Floating Bottom Right */}
-      <button
-        onClick={toggleMute}
-        className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-background/20 backdrop-blur-md border border-primary/30 text-primary hover:bg-primary/20 hover:text-primary-foreground transition-all duration-300 hover:scale-110"
-        aria-label={isMuted ? 'Unmute' : 'Mute'}
-      >
-        {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
-      </button>
+      {/* Audio Controls - Floating Bottom Right */}
+      <div className="fixed bottom-8 right-8 z-50 flex items-center gap-3 p-2 rounded-full bg-background/20 backdrop-blur-md border border-primary/30 transition-all duration-300 hover:scale-105 group">
+
+        {/* Volume Slider */}
+        <div className="w-0 overflow-hidden group-hover:w-24 transition-all duration-300 ease-in-out">
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={isMuted ? 0 : volume}
+            onChange={handleVolumeChange}
+            className="w-20 mx-2 accent-primary h-1.5 bg-primary/30 rounded-lg appearance-none cursor-pointer"
+          />
+        </div>
+
+        {/* Toggle Button */}
+        <button
+          onClick={toggleMute}
+          className="p-2 rounded-full text-primary hover:text-primary-foreground hover:bg-primary/20 transition-colors"
+          aria-label={isMuted ? 'Unmute' : 'Mute'}
+        >
+          {isMuted || volume === 0 ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+        </button>
+      </div>
 
       {/* Content wrapper to ensure it sits above background */}
       <div className="relative z-10 flex flex-col items-center">

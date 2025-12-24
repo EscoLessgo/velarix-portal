@@ -1,0 +1,153 @@
+/* Config Panel Styles */
+
+.config-panel {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: 256px;
+    background: color-mix(in srgb, hsl(240 20% 4%), transparent 10%);
+    border: 1px solid color-mix(in srgb, hsl(180 100% 50%), transparent 70%);
+    border-radius: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    color: hsl(0 0% 70%);
+    z-index: 1000;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    user-select: none;
+}
+
+.config-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: color-mix(in srgb, hsl(180 100% 50%), transparent 85%);
+    border: none;
+    border-bottom: 1px solid color-mix(in srgb, hsl(180 100% 50%), transparent 70%);
+    border-radius: 8px 8px 0 0;
+    color: hsl(180 100% 90%);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    cursor: grab;
+    transition: background-color 0.2s ease;
+}
+
+.config-panel-header:active {
+    cursor: grabbing;
+}
+
+.config-panel-header:hover {
+    background: color-mix(in srgb, hsl(180 100% 50%), transparent 75%);
+}
+
+.config-panel-chevron {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.config-panel-chevron.expanded {
+    transform: rotate(180deg);
+}
+
+.config-panel-content {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.config-row {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    background: color-mix(in srgb, hsl(240 20% 4%), transparent 50%);
+    border-radius: 4px;
+}
+
+.config-row label {
+    font-size: 0.7rem;
+    color: hsl(0 0% 55%);
+    text-transform: lowercase;
+}
+
+.config-input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.config-row input[type="range"] {
+    flex: 1;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: color-mix(in srgb, hsl(180 100% 50%), transparent 70%);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.config-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: hsl(180 100% 50%);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.config-row input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 8px hsl(180 100% 50%);
+}
+
+.config-row input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: hsl(180 100% 50%);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.config-value {
+    min-width: 2.5rem;
+    text-align: right;
+    font-family: 'Noto Sans Mono', monospace;
+    font-size: 0.65rem;
+    color: hsl(180 100% 70%);
+}
+
+.config-row select {
+    width: 100%;
+    padding: 0.25rem 0.5rem;
+    background: color-mix(in srgb, hsl(240 20% 4%), hsl(180 100% 50%) 10%);
+    border: 1px solid color-mix(in srgb, hsl(180 100% 50%), transparent 70%);
+    border-radius: 4px;
+    color: hsl(180 100% 90%);
+    font-family: inherit;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.config-row select:hover {
+    border-color: hsl(180 100% 50%);
+}
+
+.config-row select:focus {
+    outline: none;
+    border-color: hsl(180 100% 50%);
+    box-shadow: 0 0 0 2px color-mix(in srgb, hsl(180 100% 50%), transparent 80%);
+}
+
+.config-row select option {
+    background: hsl(240 20% 8%);
+    color: hsl(180 100% 90%);
+}
