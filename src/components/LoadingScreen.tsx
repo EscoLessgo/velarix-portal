@@ -1,52 +1,65 @@
-import { useState, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 export default function LoadingScreen({ onComplete }: { onComplete: () => void }) {
-  const [loadingText, setLoadingText] = useState('');
-  const [showCursor, setShowCursor] = useState(true);
-  const fullText = 'Loading...';
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [textVisible, setTextVisible] = useState(false);
 
   useEffect(() => {
-    // Type out the loading text
-    let index = 0;
-    const typeInterval = setInterval(() => {
-      if (index <= fullText.length) {
-        setLoadingText(fullText.slice(0, index));
-        index++;
-      } else {
-        clearInterval(typeInterval);
-        // Wait a bit then complete
-        setTimeout(onComplete, 800);
-      }
-    }, 150);
+    const video = videoRef.current;
+    if (!video) return;
 
-    // Blink cursor
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500);
+    // Show text after a short delay
+    const textTimer = setTimeout(() => setTextVisible(true), 500);
+
+    const handleTimeUpdate = () => {
+      // Complete when video reaches 50% of its duration
+      if (video.duration && video.currentTime >= video.duration / 2) {
+        onComplete();
+      }
+    };
+
+    video.addEventListener('timeupdate', handleTimeUpdate);
 
     return () => {
-      clearInterval(typeInterval);
-      clearInterval(cursorInterval);
+      clearTimeout(textTimer);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
     };
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background">
-      <div className="terminal-loader">
-        <div className="terminal-header">
-          <span className="terminal-title">Status</span>
-          <div className="terminal-dots">
-            <span className="dot dot-red" />
-            <span className="dot dot-yellow" />
-            <span className="dot dot-green" />
-          </div>
-        </div>
-        <div className="terminal-body">
-          <span className="terminal-text text-neon-cyan">
-            {loadingText}
-            <span className={`cursor ${showCursor ? 'opacity-100' : 'opacity-0'}`}>|</span>
-          </span>
-        </div>
+    <div className="fixed inset-0 z-[100] overflow-hidden bg-black flex items-center justify-center">
+      {/* Background Video - FULLY VISIBLE */}
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        playsInline
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/background-new.mp4" type="video/mp4" />
+      </video>
+
+      {/* Animated ESCO Text on top */}
+      <div
+        className={`relative z-10 transition-all duration-1000 ${textVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
+      >
+        <h1
+          className="text-6xl md:text-8xl font-display font-black tracking-wider"
+          style={{
+            fontFamily: "'Orbitron', 'Courier New', monospace",
+            background: 'linear-gradient(135deg, #00ffff 0%, #00ccff 25%, #0099ff 50%, #00ffff 75%, #00ccff 100%)',
+            backgroundSize: '200% auto',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            animation: 'shimmer 3s linear infinite',
+            textShadow: '0 0 30px rgba(0, 255, 255, 0.5), 0 0 60px rgba(0, 255, 255, 0.3)',
+            filter: 'drop-shadow(0 0 20px rgba(0, 255, 255, 0.6))'
+          }}
+        >
+          Ξ 𐌔 C Ó
+        </h1>
       </div>
     </div>
   );

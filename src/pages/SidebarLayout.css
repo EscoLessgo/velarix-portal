@@ -2,7 +2,7 @@
 
 .sidebar-layout {
     min-height: 100vh;
-    background: hsl(240 20% 4%);
+    background: transparent;
     display: grid;
     place-items: center;
     padding: 2rem;
@@ -73,10 +73,10 @@
 /* Main content area */
 .main-content {
     flex: 1;
-    background: color-mix(in srgb, hsl(240 20% 4%), transparent 20%);
+    background: color-mix(in srgb, hsl(240 20% 4%), transparent 90%);
     border-radius: 12px;
     border: 2px solid color-mix(in srgb, hsl(180 100% 50%), transparent 80%);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     overflow: auto;
     padding: 2rem;
 }

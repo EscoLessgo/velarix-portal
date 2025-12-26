@@ -11,18 +11,26 @@ const Index = () => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Check if user has already seen the loader this session
-    const hasSeenLoader = sessionStorage.getItem('velarix-loader-shown');
-    
-    if (!hasSeenLoader) {
-      setShowLoader(true);
-    } else {
-      setIsReady(true);
-    }
+    // TEMPORARY FOR TESTING: Always show loader
+    // TODO: Comment out the line below when done testing
+    setShowLoader(true);
+
+    // PRODUCTION CODE (uncomment when ready):
+    // Check if user has seen the loader within the last 30 minutes
+    // const loaderTimestamp = localStorage.getItem('velarix-loader-timestamp');
+    // const now = Date.now();
+    // const thirtyMinutes = 30 * 60 * 1000; // 30 minutes in milliseconds
+    // 
+    // if (!loaderTimestamp || (now - parseInt(loaderTimestamp)) > thirtyMinutes) {
+    //   setShowLoader(true);
+    // } else {
+    //   setIsReady(true);
+    // }
   }, []);
 
   const handleLoaderComplete = () => {
-    sessionStorage.setItem('velarix-loader-shown', 'true');
+    // Store the current timestamp instead of just a flag
+    localStorage.setItem('velarix-loader-timestamp', Date.now().toString());
     setShowLoader(false);
     setIsReady(true);
   };
@@ -36,11 +44,11 @@ const Index = () => {
   }
 
   return (
-    <div className="relative min-h-screen bg-background">
-      {/* 3D Background */}
-      <Suspense fallback={null}>
+    <div className="relative min-h-screen">
+      {/* 3D Background removed to show video */}
+      {/* <Suspense fallback={null}>
         <ThreeBackground />
-      </Suspense>
+      </Suspense> */}
 
       {/* Content */}
       <main className="relative z-20">

@@ -150,14 +150,15 @@ export default function VideoHero() {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
       {/* Background Video - Full Screen */}
+      {/* Background Video - Full Screen */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover -z-20"
+        className="fixed inset-0 w-full h-full object-cover -z-50"
       >
-        <source src="/background.mp4" type="video/mp4" />
+        <source src="/background-new.mp4" type="video/mp4" />
       </video>
 
       {/* Overlay gradient - Full Screen */}

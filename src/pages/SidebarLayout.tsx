@@ -170,11 +170,22 @@ const MainContent: React.FC = () => {
 const SidebarLayout: React.FC = () => {
     return (
         <div className="sidebar-layout">
+            {/* Background Video */}
+            <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="fixed inset-0 w-full h-full object-cover -z-50"
+            >
+                <source src="/background-new.mp4" type="video/mp4" />
+            </video>
+
             {/* Grid background pattern */}
             <div className="grid-background" />
 
-            {/* Bear link (original CodePen credit) */}
-            <BearLink />
+            {/* Bear link (original CodePen credit) - REMOVED */}
+            {/* <BearLink /> */}
 
             {/* Config Panel */}
             <ConfigPanel />

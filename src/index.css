@@ -388,3 +388,89 @@
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
+
+/* UI Ball Ripples Loader */
+.ripples-container {
+  --uib-size: 80px;
+  --uib-color: hsl(var(--neon-cyan));
+  --uib-speed: 2s;
+  position: relative;
+  height: var(--uib-size);
+  width: var(--uib-size);
+}
+
+.ripples-container::before,
+.ripples-container::after,
+.ripples-dot::before,
+.ripples-dot::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  background-color: var(--uib-color);
+  animation: ripple-pulse var(--uib-speed) linear infinite;
+  transform: scale(0);
+  opacity: 0;
+  transition: background-color 0.3s ease;
+}
+
+.ripples-container::after {
+  animation-delay: calc(var(--uib-speed) / -4);
+}
+
+.ripples-dot::before {
+  animation-delay: calc(var(--uib-speed) * -0.5);
+}
+
+.ripples-dot::after {
+  animation-delay: calc(var(--uib-speed) * -0.75);
+}
+
+@keyframes ripple-pulse {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes glitch {
+
+  0%,
+  100% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(2px, -2px);
+  }
+
+  60% {
+    transform: translate(-1px, -1px);
+  }
+
+  80% {
+    transform: translate(1px, 1px);
+  }
+}
