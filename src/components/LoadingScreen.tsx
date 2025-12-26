@@ -8,21 +8,42 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
     const video = videoRef.current;
     if (!video) return;
 
-    // Show text after a short delay
-    const textTimer = setTimeout(() => setTextVisible(true), 500);
+    let completed = false;
 
-    const handleTimeUpdate = () => {
-      // Complete when video reaches 50% of its duration
-      if (video.duration && video.currentTime >= video.duration / 2) {
+    const complete = () => {
+      if (!completed) {
+        completed = true;
         onComplete();
       }
     };
 
+    // Show text after a short delay
+    const textTimer = setTimeout(() => setTextVisible(true), 500);
+
+    // Fallback timeout - ensures we ALWAYS complete (5 seconds max)
+    const fallbackTimer = setTimeout(complete, 5000);
+
+    const handleTimeUpdate = () => {
+      // Complete when video reaches 50% of its duration
+      if (video.duration && video.currentTime >= video.duration / 2) {
+        complete();
+      }
+    };
+
+    const handleError = () => {
+      // If video fails to load, complete immediately
+      console.error('Video failed to load, completing loading screen');
+      complete();
+    };
+
     video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('error', handleError);
 
     return () => {
       clearTimeout(textTimer);
+      clearTimeout(fallbackTimer);
       video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('error', handleError);
     };
   }, [onComplete]);
 
