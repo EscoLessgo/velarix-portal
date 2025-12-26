@@ -9,10 +9,12 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
     if (!video) return;
 
     let completed = false;
+    let videoReady = false;
 
     const complete = () => {
       if (!completed) {
         completed = true;
+        console.log('Loading screen completing...');
         onComplete();
       }
     };
@@ -20,28 +22,38 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
     // Show text after a short delay
     const textTimer = setTimeout(() => setTextVisible(true), 500);
 
-    // Fallback timeout - ensures we ALWAYS complete (5 seconds max)
-    const fallbackTimer = setTimeout(complete, 5000);
+    // Longer fallback timeout - 15 seconds to give video time to load
+    const fallbackTimer = setTimeout(() => {
+      console.log('Fallback timer triggered');
+      complete();
+    }, 15000);
+
+    const handleCanPlayThrough = () => {
+      videoReady = true;
+      console.log('Video ready to play through');
+    };
 
     const handleTimeUpdate = () => {
-      // Complete when video reaches 50% of its duration
-      if (video.duration && video.currentTime >= video.duration / 2) {
+      // Only check progress if video is ready
+      if (videoReady && video.duration && video.currentTime >= video.duration / 2) {
+        console.log('Video reached 50% - completing');
         complete();
       }
     };
 
-    const handleError = () => {
-      // If video fails to load, complete immediately
-      console.error('Video failed to load, completing loading screen');
+    const handleError = (e: any) => {
+      console.error('Video failed to load:', e);
       complete();
     };
 
+    video.addEventListener('canplaythrough', handleCanPlayThrough);
     video.addEventListener('timeupdate', handleTimeUpdate);
     video.addEventListener('error', handleError);
 
     return () => {
       clearTimeout(textTimer);
       clearTimeout(fallbackTimer);
+      video.removeEventListener('canplaythrough', handleCanPlayThrough);
       video.removeEventListener('timeupdate', handleTimeUpdate);
       video.removeEventListener('error', handleError);
     };
@@ -57,6 +69,9 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
         playsInline
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
+        onLoadedData={() => console.log('Video loaded successfully')}
+        onCanPlay={() => console.log('Video can play')}
+        onError={(e) => console.error('Video error:', e)}
       >
         <source src="/background-new.mp4" type="video/mp4" />
       </video>
