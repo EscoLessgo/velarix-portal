@@ -26,6 +26,12 @@ const projects = [
   color: 'cyan' as const,
 },
 {
+  title: 'Scattergories Discord Game Install Link',
+  url: 'https://discord.com/oauth2/authorize?client_id=1452087558057230437',
+  description: 'Scattergories By Esco',
+  color: 'cyan' as const,
+},
+{
     title: 'Spelling Bee Rip',
     url: 'spell.velarixsolutions.nl',
     description: 'Better NYT Shitstain daily challenge',
