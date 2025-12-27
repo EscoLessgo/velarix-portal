@@ -87,7 +87,7 @@ export const TREE_DATA: TreeData = {
                             external: true,
                             description: "Word game for Discord"
                         },
-                        {                        {
+                        {
                             id: "LetterLitter (Scattergories)",
                             label: "ScatteGories",
                             href: "https://discord.com/oauth2/authorize?client_id=1452087558057230437",
