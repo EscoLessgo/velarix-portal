@@ -38,8 +38,8 @@ const projects = [
     color: 'cyan' as const,
   },
   {
-    title: 'Escos Entries',
-    url: 'pastebin.com/u/EscoBreakTings',
+    title: 'Escos Entries - Private PasteBin',
+    url: 'https://idump.velarixsolutions.nl',
     description: 'Where I dump out my daily thoughts or random interests',
     color: 'cyan' as const,
   },
