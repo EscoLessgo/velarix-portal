@@ -45,19 +45,19 @@ const projects = [
   },
   {
     title: 'What Im Listening To',
-    url: 'spoti.velarixsolutions.nl',
+    url: 'spoti.veroe.fun',
     description: 'Escos Live Audio Visualizer',
     color: 'cyan' as const,
   },
   {
     title: 'EscosArchive',
-    url: 'more.velarixsolutions.nl',
+    url: 'more.veroe.fun',
     description: 'My Games / Projects',
     color: 'cyan' as const,
   },
   {
     title: 'Esco Signs',
-    url: 'escosigns.velarixsolutions.nl',
+    url: 'escosigns.veroe.fun',
     description: 'Professional signage and branding solutions platform.',
     color: 'purple' as const,
   },
@@ -66,12 +66,6 @@ const projects = [
     url: 'crypto.velarixsolutions.nl',
     description: 'Cryptocurrency insights and blockchain technology resources.',
     color: 'cyan' as const,
-  },
-  {
-    title: '404 Creative',
-    url: '404.velarixsolutions.nl',
-    description: 'Creative error pages and unique web experiments.',
-    color: 'magenta' as const,
   },
   {
     title: 'Find',
